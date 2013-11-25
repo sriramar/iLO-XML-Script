@@ -9,11 +9,11 @@ from twisted.protocols.basic import LineReceiver
 from twisted.internet import ssl, reactor
 
 def xml():
-    '''boilerplate xml body to send to the netapp filer'''
+    '''XML body for iLO request'''
     return (
         '<?xml version=\"1.0\"?>'
         '<RIBCL VERSION=\"2.21\">'
-        '<LOGIN USER_LOGIN=\"hcladmin\" PASSWORD=\"hcladmin\">'
+        '<LOGIN USER_LOGIN=\"username\" PASSWORD=\"password\">'
         '<SERVER_INFO MODE=\"read\">'
         '<GET_EMBEDDED_HEALTH/>'
         '</SERVER_INFO>'
@@ -45,5 +45,5 @@ class ILOClientFactory(ClientFactory):
 
 def main():
     factory = ILOClientFactory()
-    reactor.connectSSL('10.100.71.26', 443, factory, ssl.CertificateOptions())
+    reactor.connectSSL('192.168.0.2', 443, factory, ssl.CertificateOptions())
     reactor.run()
