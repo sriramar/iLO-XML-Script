@@ -38,21 +38,21 @@ class iloInterface:
      global conn_detail
      print ("in ilointerface method")
      conn_detail = ConnectionInfo(
-            '10.100.71.26',
+            '10.192.152.2',
             'basic',
-            'hcladmin',
-            'hcladmin',
+            'admin',
+            'admin',
             'https',
             443,
             'Keep-Alive',
             'none',
-            '10.100.71.26',)
+            '10.192.152.5',)
 def xml():
     '''boilerplate xml body to send to the netapp filer'''
     return (
        '<?xml version=\"1.0\"?>'
         '<RIBCL VERSION=\"2.21\">'
-        '<LOGIN USER_LOGIN=\"hcladmin\" PASSWORD=\"hcladmin\">'
+        '<LOGIN USER_LOGIN=\"admin\" PASSWORD=\"admin\">'
         '<SERVER_INFO MODE=\"read\">'
         '<GET_EMBEDDED_HEALTH/>'
         '</SERVER_INFO>'
@@ -151,7 +151,7 @@ class StringProducer(object):
 
         
 def _get_basic_auth_header():
-    authstr = "{0}:{1}".format("hcladmin", "hcladmin")
+    authstr = "{0}:{1}".format("admin", "admin")
     print (conn_detail.username)
     print (conn_detail.password)
     return 'Basic {0}'.format(base64.encodestring(authstr).strip())
@@ -167,7 +167,7 @@ def main():
      body = FileBodyProducer(StringIO(xml()))
      #body = StringProducer(xml())
      headers=getHeaders()
-     d= agent.request("GET", "https://10.100.71.26",headers,body)
+     d= agent.request("GET", "https://10.192.152.2",headers,body)
      d.addCallbacks(display,err)
      d.addCallbacks(lambda ignored: reactor.stop())
      reactor.run()
